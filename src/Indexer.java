@@ -1,14 +1,13 @@
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.process.CoreLabelTokenFactory;
+import edu.stanford.nlp.process.PTBTokenizer;
 import org.tartarus.snowball.SnowballStemmer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.function.Consumer;
 
 public class Indexer {
 
@@ -32,46 +31,50 @@ public class Indexer {
             Files.walk(Paths.get(path)).forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     File file = new File(filePath.toString());
-                    Scanner input = null;
+                    int position = 0;
 
+                    PTBTokenizer ptbt = null;
                     try {
-                        input = new Scanner(file);
-                        int position = 0;
+                        ptbt = new PTBTokenizer(
+                                new FileReader(filePath.toString()),
+                                new CoreLabelTokenFactory(),
+                                "untokenizable=noneKeep"
+                        );
 
 
-                        while (input.hasNext()) {
-                            ++position;
-                            String term = input.next();
-
-
-                            term = tokenizer(term);
+                        for (CoreLabel label; ptbt.hasNext(); ) {
+                            label = (CoreLabel) ptbt.next();
+                            String term = label.current();
+                            term = removeSiblings(term);
                             term = stemming(term);
 
+                            System.out.println(term);
+
+                            position++;
                             if (!term.equals("")) {
                                 if (!terms.contains(term)) {
                                     Term t = new Term(term);
                                     terms.addTerm(t);
                                 }
 
-                                terms.getTerm(term).addPosition(fileId, position);
+                                terms.getTerm(term).addPosition(fileId, filePath.toString(),position);
                             }
                         }
 
-                        input.close();
-                        fileId++;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-
                 }
+
+                fileId++;
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private String tokenizer(String nextToken) {
-        return nextToken.replaceAll("[^a-zA-ZüöäÖÄÜß]", "").toLowerCase();
+    private String removeSiblings(String nextToken) {
+        return nextToken.replaceAll("[^a-zA-Z]", "").toLowerCase();
     }
 
     private String stemming(String token) {
@@ -80,8 +83,8 @@ public class Indexer {
         return stemmer.getCurrent();
     }
 
-    public Collection<Integer> intersect(Set<Integer> s1, Set<Integer> s2) {
+    /*public Collection<Integer> intersect(Set<Integer> s1, Set<Integer> s2) {
         s1.retainAll(s2);
         return s1;
-    }
+    }*/
 }

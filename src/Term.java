@@ -16,7 +16,7 @@ public class Term {
 
     //
     // Additional Methods
-    public void addPosition(int id, int position) {
+    public void addPosition(int id, String filename, int position) {
         Document document = null;
         try {
             document = documents.get(id);
@@ -24,7 +24,7 @@ public class Term {
         }
 
         if (document == null) {
-            document = new Document(id);
+            document = new Document(id, filename);
             documents.add(document);
         }
         document.addPosition(position);

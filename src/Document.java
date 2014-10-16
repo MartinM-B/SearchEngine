@@ -4,13 +4,15 @@ import java.util.Set;
 public class Document {
 
     int id;
+    String name;
     Set<Integer> positions = new HashSet<>();
 
 
     //
     // Constructor
-    public Document(int id) {
+    public Document(int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
 
@@ -35,7 +37,13 @@ public class Document {
         return positions;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
