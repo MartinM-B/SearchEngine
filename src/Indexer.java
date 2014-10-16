@@ -3,14 +3,16 @@ import org.tartarus.snowball.SnowballStemmer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class Indexer {
 
-    public static final String LIBRARY = "org.tartarus.snowball.ext.germanStemmer";
+    public static final String LIBRARY = "org.tartarus.snowball.ext.englishStemmer";
     TermStorage terms = new TermStorage();
     int fileId = 1;
     SnowballStemmer stemmer;
