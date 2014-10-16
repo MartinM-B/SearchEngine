@@ -1,3 +1,5 @@
+import org.tartarus.snowball.SnowballStemmer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
@@ -8,8 +10,20 @@ import java.util.Set;
 
 public class Indexer {
 
+    public static final String LIBRARY = "org.tartarus.snowball.ext.germanStemmer";
     TermStorage terms = new TermStorage();
     int fileId = 1;
+    SnowballStemmer stemmer;
+
+
+    public Indexer() {
+        try {
+            Class stemClass = Class.forName(LIBRARY);
+            stemmer = (SnowballStemmer) stemClass.newInstance();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
 
     public void parseFolder(String path) {
         try {
@@ -27,7 +41,10 @@ public class Indexer {
                             ++position;
                             String term = input.next();
 
+
                             term = tokenizer(term);
+                            term = stemming(term);
+
                             if (!term.equals("")) {
                                 if (!terms.contains(term)) {
                                     Term t = new Term(term);
@@ -53,6 +70,12 @@ public class Indexer {
 
     private String tokenizer(String nextToken) {
         return nextToken.replaceAll("[^a-zA-ZüöäÖÄÜß]", "").toLowerCase();
+    }
+
+    private String stemming(String token) {
+        stemmer.setCurrent(token);
+        stemmer.stem();
+        return stemmer.getCurrent();
     }
 
     public Collection<Integer> intersect(Set<Integer> s1, Set<Integer> s2) {
