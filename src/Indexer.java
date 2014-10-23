@@ -8,10 +8,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Indexer {
 
     public static final String LIBRARY = "org.tartarus.snowball.ext.englishStemmer";
+
     TermStorage terms = new TermStorage();
     int fileId = 1;
     SnowballStemmer stemmer;
@@ -48,16 +53,13 @@ public class Indexer {
                             term = removeSiblings(term);
                             term = stemming(term);
 
-                            System.out.println(term);
-
                             position++;
                             if (!term.equals("")) {
                                 if (!terms.contains(term)) {
                                     Term t = new Term(term);
                                     terms.addTerm(t);
                                 }
-
-                                terms.getTerm(term).addPosition(fileId, filePath.toString(),position);
+                                terms.getTerm(term).addPosition(fileId, filePath.toString(), position);
                             }
                         }
 
@@ -83,8 +85,19 @@ public class Indexer {
         return stemmer.getCurrent();
     }
 
-    /*public Collection<Integer> intersect(Set<Integer> s1, Set<Integer> s2) {
-        s1.retainAll(s2);
-        return s1;
-    }*/
+
+    public Set merge(String termName1, String termName2) {
+
+        Set<Integer> positions = this.terms.getTerm(termName1).getDocumentIds();
+        Set<Integer> positions1 = this.terms.getTerm(termName2).getDocumentIds();
+
+        positions.retainAll(positions1);
+        return positions;
+
+    }
+
+
+    public TermStorage getTerms() {
+        return terms;
+    }
 }

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Term {
 
@@ -19,7 +21,11 @@ public class Term {
     public void addPosition(int id, String filename, int position) {
         Document document = null;
         try {
-            document = documents.get(id);
+            for(Document d : documents){
+                if(d.getId() == id){
+                    document = d;
+                }
+            }
         } catch (Exception e) {
         }
 
@@ -32,8 +38,22 @@ public class Term {
     }
 
 
+
+
     //
     // Getter / Setter
+
+
+    public Set<Integer> getDocumentIds(){
+
+        Set<Integer> ids = new HashSet<>();
+        for(Document d : documents){
+            ids.add(d.getId());
+        }
+
+        return ids;
+    }
+
     public String getName() {
         return name;
     }

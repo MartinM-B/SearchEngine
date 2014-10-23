@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Document {
 
     int id;
     String name;
-    Set<Integer> positions = new HashSet<>();
+    List<Integer> positions = new ArrayList<>();
 
 
     //
@@ -33,7 +34,7 @@ public class Document {
         this.id = id;
     }
 
-    public Set<Integer> getPositions() {
+    public List<Integer> getPositions() {
         return positions;
     }
 
