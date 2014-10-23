@@ -1,12 +1,20 @@
+package foo;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Term {
+public class Term implements Comparable<Term> {
 
     String name;
     int frequency;
     List<Document> documents = new ArrayList<>();
 
+    @Override
+    public int compareTo(Term o) {
+        if (this == o) return 0;
+
+        return name.compareTo(o.getName());
+    }
 
     //
     // Constructor

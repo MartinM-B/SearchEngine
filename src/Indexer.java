@@ -1,6 +1,10 @@
+import TermStorage.BTreeTermStorage;
+import TermStorage.HashMapTermStorage;
+import TermStorage.StorageInterface;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
+import foo.Term;
 import org.tartarus.snowball.SnowballStemmer;
 
 import java.io.File;
@@ -12,7 +16,7 @@ import java.nio.file.Paths;
 public class Indexer {
 
     public static final String LIBRARY = "org.tartarus.snowball.ext.englishStemmer";
-    TermStorage terms = new TermStorage();
+    StorageInterface terms = new BTreeTermStorage();
     int fileId = 1;
     SnowballStemmer stemmer;
 
@@ -51,14 +55,9 @@ public class Indexer {
                             System.out.println(term);
 
                             position++;
-                            if (!term.equals("")) {
-                                if (!terms.contains(term)) {
-                                    Term t = new Term(term);
-                                    terms.addTerm(t);
-                                }
 
-                                terms.getTerm(term).addPosition(fileId, filePath.toString(),position);
-                            }
+                            terms.addTerm(term, fileId, filePath.toString(), position);
+
                         }
 
                     } catch (FileNotFoundException e) {
