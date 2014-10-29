@@ -1,4 +1,4 @@
-package org.tartarus.snowball;
+package libs.snowball;
 
 import java.io.*;
 
@@ -13,7 +13,7 @@ public class TestApp {
             return;
         }
 
-        Class stemClass = Class.forName("org.tartarus.snowball.ext." +
+        Class stemClass = Class.forName("libs.snowball.ext." +
                 args[0] + "Stemmer");
         SnowballStemmer stemmer = (SnowballStemmer) stemClass.newInstance();
 

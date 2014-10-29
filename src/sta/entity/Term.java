@@ -1,14 +1,15 @@
+package sta.entity;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Term {
+public class Term implements Comparable<Term> {
 
     String name;
     int frequency;
     List<Document> documents = new ArrayList<>();
-
 
     //
     // Constructor
@@ -21,12 +22,12 @@ public class Term {
     public void addPosition(int id, String filename, int position) {
         Document document = null;
         try {
-            for(Document d : documents){
-                if(d.getId() == id){
+            for (Document d : documents) {
+                if (d.getId() == id) {
                     document = d;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         if (document == null) {
@@ -38,16 +39,12 @@ public class Term {
     }
 
 
-
-
     //
     // Getter / Setter
-
-
-    public Set<Integer> getDocumentIds(){
+    public Set<Integer> getDocumentIds() {
 
         Set<Integer> ids = new HashSet<>();
-        for(Document d : documents){
+        for (Document d : documents) {
             ids.add(d.getId());
         }
 
@@ -91,4 +88,12 @@ public class Term {
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
     }
+
+    @Override
+    public int compareTo(Term o) {
+        if (this == o) return 0;
+
+        return name.compareTo(o.getName());
+    }
+
 }

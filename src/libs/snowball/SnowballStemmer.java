@@ -1,5 +1,5 @@
 
-package org.tartarus.snowball;
+package libs.snowball;
 
 public abstract class SnowballStemmer extends SnowballProgram {
     public abstract boolean stem();

@@ -1,23 +1,24 @@
+package sta;
+
+import sta.entity.TermStorageBTree;
+import sta.entity.interfaces.StorageInterface;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
-import org.tartarus.snowball.SnowballStemmer;
+import libs.snowball.SnowballStemmer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Indexer {
 
-    public static final String LIBRARY = "org.tartarus.snowball.ext.englishStemmer";
+    public static final String LIBRARY = "libs.snowball.ext.englishStemmer";
 
-    TermStorage terms = new TermStorage();
+    StorageInterface terms = new TermStorageBTree();
     int fileId = 1;
     SnowballStemmer stemmer;
 
@@ -31,11 +32,12 @@ public class Indexer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void parseFolder(String path) {
         try {
             Files.walk(Paths.get(path)).forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
-                    File file = new File(filePath.toString());
+
                     int position = 0;
 
                     PTBTokenizer ptbt = null;
@@ -54,13 +56,8 @@ public class Indexer {
                             term = stemming(term);
 
                             position++;
-                            if (!term.equals("")) {
-                                if (!terms.contains(term)) {
-                                    Term t = new Term(term);
-                                    terms.addTerm(t);
-                                }
-                                terms.getTerm(term).addPosition(fileId, filePath.toString(), position);
-                            }
+
+                            terms.addTerm(term, fileId, filePath.toString(), position);
                         }
 
                     } catch (FileNotFoundException e) {
@@ -87,17 +84,19 @@ public class Indexer {
 
 
     public Set merge(String termName1, String termName2) {
-
+        // Todo:
+        return null;
+        /*
         Set<Integer> positions = this.terms.getTerm(termName1).getDocumentIds();
         Set<Integer> positions1 = this.terms.getTerm(termName2).getDocumentIds();
 
         positions.retainAll(positions1);
         return positions;
-
+*/
     }
 
 
-    public TermStorage getTerms() {
-        return terms;
-    }
+  //  public sta.entity.TermStorage getTerms() {
+  //      return terms;
+  //  }
 }
