@@ -96,4 +96,10 @@ public class Term implements Comparable<Term> {
         return name.compareTo(o.getName());
     }
 
+    @Override
+    public String toString() {
+        return "Term{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

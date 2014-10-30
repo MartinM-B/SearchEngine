@@ -9,7 +9,7 @@ public class DocParser {
         Indexer i = new Indexer();
         i.parseFolder("docs");
         Set mergeResult = i.merge(i.merge(i.merge("authors", "in"), "home"), "me");
-
+        
         String [] terms = {
                 "you", "me", "home", "in"
         };

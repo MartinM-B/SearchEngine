@@ -4,6 +4,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import libs.snowball.SnowballStemmer;
+import sta.entity.Term;
 import sta.entity.TermStorageBTree;
 import sta.entity.interfaces.StorageInterface;
 
@@ -11,7 +12,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+<<<<<<< HEAD
 import java.util.HashSet;
+=======
+import java.util.Collection;
+>>>>>>> 32cd825c570b80d14ca95e10d90f99aafabae705
 import java.util.Set;
 
 public class Indexer {
@@ -94,6 +99,7 @@ public class Indexer {
         return positions;
     }
 
+<<<<<<< HEAD
 
     public Set merge (Set positions, String termName2){
         Set<Integer> positions2 = this.terms.getTerm(processTerm(termName2)).getDocumentIds();
@@ -149,6 +155,10 @@ public class Indexer {
         term = removeSiblings(term);
         term = stemming(term);
         return term;
+=======
+    public Collection<Term> searchWithWildcard(String query) {
+        return terms.query(query);
+>>>>>>> 32cd825c570b80d14ca95e10d90f99aafabae705
     }
 }
 
