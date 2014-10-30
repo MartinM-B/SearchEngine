@@ -36,6 +36,7 @@ public class DocParser {
 
         Set allResult = i.merge(i.not("Garamond"), "home");
         Set allResult1 = i.merge(i.or(i.not("Garamond"), "me"), "home");
+        Set allResult123123123 = i.merge(i.or(i.not("asdasdasdasdasdasdasd"), "me"), "home");
 
         System.out.print("Bla");
     }
