@@ -8,13 +8,16 @@ import java.util.Set;
 public class Term implements Comparable<Term> {
 
     String name;
+    String soundex;
     int frequency;
     List<Document> documents = new ArrayList<>();
 
     //
     // Constructor
-    public Term(String name) {
+    public Term(String name, String soundex) {
+
         this.name = name;
+        this.soundex = soundex;
     }
 
     //
@@ -59,6 +62,14 @@ public class Term implements Comparable<Term> {
         this.name = name;
     }
 
+    public String getSoundex() {
+        return soundex;
+    }
+
+    public void setSoundex(String soundex) {
+        this.soundex = soundex;
+    }
+
     public int getFrequency() {
         return frequency;
     }
@@ -79,9 +90,10 @@ public class Term implements Comparable<Term> {
 
         Term term = (Term) o;
 
-        if (name != null ? !name.equals(term.name) : term.name != null) return false;
+        if (name.equals(term.name)) return true;
+        if (soundex.equals(term.soundex)) return true;
 
-        return true;
+        return false;
     }
 
     @Override
@@ -93,13 +105,17 @@ public class Term implements Comparable<Term> {
     public int compareTo(Term o) {
         if (this == o) return 0;
 
-        return name.compareTo(o.getName());
+        if (name.compareTo(o.getName()) == -1 ) return -1;
+        if (soundex.compareTo(o.getSoundex()) == -1) return -1;
+
+        return 1;
     }
 
     @Override
     public String toString() {
-        return "Term{" +
+        return "Term {" +
                 "name='" + name + '\'' +
+                "soundex='" + soundex+ '\'' +
                 '}';
     }
 }

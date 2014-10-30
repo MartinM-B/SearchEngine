@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface StorageInterface {
 
-    public void addTerm(String term, int fileId, String filePath, int position);
+    public void addTerm(String term, String soundex, int fileId, String filePath, int position);
     public Term getTerm(String term);
     public Collection<Term> query(String term);
 

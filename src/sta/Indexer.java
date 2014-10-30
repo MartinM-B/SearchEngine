@@ -7,12 +7,14 @@ import libs.snowball.SnowballStemmer;
 import sta.entity.Term;
 import sta.entity.TermStorageBTree;
 import sta.entity.interfaces.StorageInterface;
+import sta.utils.Soundex;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Indexer {
@@ -20,6 +22,7 @@ public class Indexer {
     public static final String LIBRARY = "libs.snowball.ext.englishStemmer";
 
     StorageInterface terms = new TermStorageBTree();
+
     int fileId = 1;
     SnowballStemmer stemmer;
 
@@ -55,10 +58,12 @@ public class Indexer {
                             String term = label.current();
                             term = removeSiblings(term);
                             term = stemming(term);
-
                             position++;
 
-                            terms.addTerm(term, fileId, filePath.toString(), position);
+                            if(term.length() > 0) {
+                                String termSoundex = soundex(term);
+                                terms.addTerm(term, termSoundex, fileId, filePath.toString(), position);
+                            }
                         }
 
                     } catch (FileNotFoundException e) {
@@ -73,6 +78,14 @@ public class Indexer {
         }
     }
 
+    /**
+     * @param term
+     * @return
+     */
+    private String soundex(String term) {
+        return Soundex.soundex(term);
+    }
+
     private String removeSiblings(String nextToken) {
         return nextToken.replaceAll("[^a-zA-Z]", "").toLowerCase();
     }
@@ -85,7 +98,6 @@ public class Indexer {
 
 
     /**
-     *
      * @param termName1
      * @param termName2
      * @return
@@ -101,5 +113,11 @@ public class Indexer {
     public Collection<Term> searchWithWildcard(String query) {
         return terms.query(query);
     }
+
+
+    // you
+
+    // term: you
+    // sound: uuu
 }
 

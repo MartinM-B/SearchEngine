@@ -10,9 +10,10 @@ public class DocParser {
         i.parseFolder("docs");
         Set mergeResult = i.merge("you", "me");
 
-        System.out.println(i.searchWithWildcard("holiday"));
-        System.out.println(i.searchWithWildcard("you"));
-        System.out.println(i.searchWithWildcard("a$"));
+      //  System.out.println(i.searchWithWildcard("holiday"));
+      //  System.out.println(i.searchWithWildcard("you"));
+        System.out.println(i.searchWithWildcard("A130"));
+      //  System.out.println(i.searchWithWildcard("a$"));
 
     }
 }
