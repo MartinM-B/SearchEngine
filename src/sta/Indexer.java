@@ -4,6 +4,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import libs.snowball.SnowballStemmer;
+import sta.entity.Term;
 import sta.entity.TermStorageBTree;
 import sta.entity.interfaces.StorageInterface;
 
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Set;
 
 public class Indexer {
@@ -94,6 +96,10 @@ public class Indexer {
 
         positions.retainAll(positions1);
         return positions;
+    }
+
+    public Collection<Term> searchWithWildcard(String query) {
+        return terms.query(query);
     }
 }
 
