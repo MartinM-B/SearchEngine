@@ -17,4 +17,9 @@ public class TermStorageBTree implements StorageInterface {
         t.addPosition(fileId, filePath, position);
         terms.put(term, t);
     }
+
+    @Override
+    public Term getTerm(String term) {
+        return terms.get(term);
+    }
 }

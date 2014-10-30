@@ -8,7 +8,7 @@ public class DocParser {
     public static void main(String[] args) throws IOException {
         Indexer i = new Indexer();
         i.parseFolder("docs");
-       // Set mergeResult = i.merge("you", "me");
+        Set mergeResult = i.merge("you", "me");
 
 
     }

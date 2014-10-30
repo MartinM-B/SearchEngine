@@ -1,13 +1,12 @@
 package sta;
 
-import sta.entity.TermStorageBTree;
-import sta.entity.interfaces.StorageInterface;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import libs.snowball.SnowballStemmer;
+import sta.entity.TermStorageBTree;
+import sta.entity.interfaces.StorageInterface;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
@@ -83,20 +82,18 @@ public class Indexer {
     }
 
 
+    /**
+     *
+     * @param termName1
+     * @param termName2
+     * @return
+     */
     public Set merge(String termName1, String termName2) {
-        // Todo:
-        return null;
-        /*
         Set<Integer> positions = this.terms.getTerm(termName1).getDocumentIds();
         Set<Integer> positions1 = this.terms.getTerm(termName2).getDocumentIds();
 
         positions.retainAll(positions1);
         return positions;
-*/
     }
-
-
-  //  public sta.entity.TermStorage getTerms() {
-  //      return terms;
-  //  }
 }
+
