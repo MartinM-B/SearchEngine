@@ -3,9 +3,14 @@ package sta.entity;
 import sta.entity.interfaces.StorageInterface;
 import sta.utils.BTree;
 
+<<<<<<< HEAD
+import java.util.HashSet;
+import java.util.Set;
+=======
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+>>>>>>> 32cd825c570b80d14ca95e10d90f99aafabae705
 
 
 public class TermStorageBTree implements StorageInterface {
@@ -13,6 +18,7 @@ public class TermStorageBTree implements StorageInterface {
 
 
     BTree<String, Term> terms = new BTree<>();
+    Set<Integer> availableDocuments = new HashSet<Integer>();
 
     @Override
     public void addTerm(String term, String soundex, int fileId, String filePath, int position) {
@@ -22,6 +28,7 @@ public class TermStorageBTree implements StorageInterface {
             t = new Term(term, soundex);
 
         t.addPosition(fileId, filePath, position);
+        this.availableDocuments.add(fileId);
         terms.put(term, t);
     }
 
@@ -31,6 +38,10 @@ public class TermStorageBTree implements StorageInterface {
     }
 
     @Override
+<<<<<<< HEAD
+    public Set<Integer> getAvailableDocuments() {
+        return availableDocuments;
+=======
     public Collection<Term> query(String query) {
         List<Term> c = new ArrayList<>();
         boolean hasWildcard = false;
@@ -47,5 +58,6 @@ public class TermStorageBTree implements StorageInterface {
         }
 
         return c;
+>>>>>>> 32cd825c570b80d14ca95e10d90f99aafabae705
     }
 }
