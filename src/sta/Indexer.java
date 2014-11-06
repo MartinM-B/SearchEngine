@@ -101,6 +101,11 @@ public class Indexer {
      * @return
      */
     public Set merge(String termName1, String termName2) {
+
+        if(this.terms.getTerm(processTerm(termName1)) == null || this.terms.getTerm(processTerm(termName2)) == null){
+            return new HashSet<Integer>();
+        }
+
         Set<Integer> positions = this.terms.getTerm(processTerm(termName1)).getDocumentIds();
         Set<Integer> positions1 = this.terms.getTerm(processTerm(termName2)).getDocumentIds();
 
@@ -109,6 +114,11 @@ public class Indexer {
     }
 
     public Set merge (Set positions, String termName2){
+
+        if(this.terms.getTerm(processTerm(termName2)) == null || positions.isEmpty()){
+            return new HashSet<Integer>();
+        }
+
         Set<Integer> positions2 = this.terms.getTerm(processTerm(termName2)).getDocumentIds();
 
         positions.retainAll(positions2);
@@ -116,36 +126,48 @@ public class Indexer {
     }
 
     public Set merge (String [] termNames){
-
         Set<Integer> positions =  this.terms.getTerm(processTerm(termNames[0])).getDocumentIds();
         for(String term : termNames){
-            //positions = this.merge(positions, term);
-            positions.retainAll(this.terms.getTerm(processTerm(term)).getDocumentIds());
+            positions = this.merge(positions, term);
+            //positions.retainAll(this.terms.getTerm(processTerm(term)).getDocumentIds());
         }
         return positions;
     }
 
     public Set or(String termName1, String termName2) {
-        Set<Integer> positions = this.terms.getTerm(processTerm(termName1)).getDocumentIds();
-        Set<Integer> positions1 = this.terms.getTerm(processTerm(termName2)).getDocumentIds();
+        Term term = this.terms.getTerm(processTerm(termName1));
+        Term term2 = this.terms.getTerm(processTerm(termName2));
+
+        if(term == null && term2 == null){
+            return new HashSet<Integer>();
+        }else if(term == null){
+            return term2.getDocumentIds();
+        }else if(term2 == null){
+            return term.getDocumentIds();
+        }
+        Set<Integer> positions = term.getDocumentIds();
+        Set<Integer> positions1 = term2.getDocumentIds();
 
         positions.addAll(positions1);
         return positions;
     }
 
     public Set or (Set positions, String termName2){
-        Set<Integer> positions2 = this.terms.getTerm(processTerm(termName2)).getDocumentIds();
+        Term term = this.terms.getTerm(processTerm(termName2));
 
+        if(term == null){
+            return positions;
+        }
+
+        Set<Integer> positions2 = term.getDocumentIds();
         positions.addAll(positions2);
         return positions;
     }
 
     public Set or (String [] termNames){
-
         Set<Integer> positions =  this.terms.getTerm(processTerm(termNames[0])).getDocumentIds();
         for(String term : termNames){
             positions = this.or(positions, term);
-            //positions.addAll(this.terms.getTerm(processTerm(term)).getDocumentIds());
         }
         return positions;
     }
