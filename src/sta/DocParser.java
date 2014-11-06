@@ -15,10 +15,9 @@ public class DocParser {
         };
         Set mergeResult2 = i.merge(terms);
 
-      //  System.out.println(i.searchWithWildcard("holiday"));
-      //  System.out.println(i.searchWithWildcard("you"));
-        System.out.println(i.searchWithWildcard("A130"));
-      //  System.out.println(i.searchWithWildcard("a$"));
+        System.out.println(i.searchWithWildcard("holiday"));
+        System.out.println(i.searchWithWildcard("you"));
+        System.out.println(i.searchWithWildcard("a$"));
 
         Set orResults = i.or("authors", "me");
 
@@ -36,7 +35,7 @@ public class DocParser {
 
         Set allResult = i.merge(i.not("Garamond"), "home");
         Set allResult1 = i.merge(i.or(i.not("Garamond"), "me"), "home");
-        Set allResult123123123 = i.merge(i.or(i.not("asdasdasdasdasdasdasd"), "me"), "home");
+        Set allResult123123123 = i.merge(i.or(i.not("asdg"), "me"), "home");
 
         System.out.print("Bla");
     }
