@@ -31,7 +31,11 @@ public class TermStorageBTree implements StorageInterface {
 
     @Override
     public Term getTerm(String term) {
-        return terms.get(term);
+        try{
+            return terms.get(term);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override

@@ -151,7 +151,11 @@ public class Indexer {
     }
 
     public Set not(String termName1) {
-        Set<Integer> positions = this.terms.getTerm(processTerm(termName1)).getDocumentIds();
+       Term term1 = this.terms.getTerm(processTerm(termName1));
+        if(term1 == null){
+            return this.terms.getAvailableDocuments();
+        }
+        Set<Integer> positions = term1.getDocumentIds();
         Set<Integer> positions2 = this.terms.getAvailableDocuments();
 
         positions2.removeAll(positions);
