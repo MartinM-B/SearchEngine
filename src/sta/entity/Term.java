@@ -8,6 +8,7 @@ import java.util.Set;
 public class Term implements Comparable<Term> {
 
     String name;
+    int position;
     String soundex;
     int frequency;
     List<Document> documents = new ArrayList<>();
@@ -18,6 +19,7 @@ public class Term implements Comparable<Term> {
 
         this.name = name;
         this.soundex = soundex;
+        this.position = 0;
     }
 
     //
@@ -82,6 +84,14 @@ public class Term implements Comparable<Term> {
         return documents;
     }
 
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     @Override
     public boolean equals(Object o) {

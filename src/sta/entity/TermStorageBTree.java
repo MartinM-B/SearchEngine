@@ -12,6 +12,7 @@ import java.util.List;
 
 public class TermStorageBTree implements StorageInterface {
     public static final String WILDCARD = "$";
+    public static String DictionaryString ="";
 
 
     BTree<String, Term> terms = new BTree<>();
@@ -70,4 +71,12 @@ public class TermStorageBTree implements StorageInterface {
         System.out.println(this.terms.toStringKey());
 
     }
+    public void createDictionaryString() {
+        String temp = "";
+        int count = 0;
+
+
+
+    }
 }
+
