@@ -11,4 +11,5 @@ public interface StorageInterface {
     public Term getTerm(String term);
     public Set<Integer> getAvailableDocuments();
     public Collection<Term> query(String term);
+    public void getTheString();
 }

@@ -116,6 +116,7 @@ public class Term implements Comparable<Term> {
         return "Term {" +
                 "name='" + name + '\'' +
                 "soundex='" + soundex+ '\'' +
+                "frequency='" + frequency+ '\'' +
                 '}';
     }
 }

@@ -21,12 +21,16 @@ public class TermStorageBTree implements StorageInterface {
     public void addTerm(String term, String soundex, int fileId, String filePath, int position) {
         Term t = terms.get(term);
 
-        if (t == null)
+        if (t == null) {
             t = new Term(term, soundex);
+            terms.put(term, t);
+        }
 
         t.addPosition(fileId, filePath, position);
         this.availableDocuments.add(fileId);
-        terms.put(term, t);
+
+
+
     }
 
     @Override
@@ -59,5 +63,11 @@ public class TermStorageBTree implements StorageInterface {
         }
 
         return c;
+    }
+
+    public void getTheString(){
+
+        System.out.println(this.terms.toStringKey());
+
     }
 }

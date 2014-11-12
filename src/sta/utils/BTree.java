@@ -204,6 +204,32 @@ public class BTree<Key extends Comparable<Key>, Value extends Term> {
         return s;
     }
 
+    public String toStringKey() {
+        return toStringKey(root, HT);
+    }
+
+    private String toStringKey(Node h, int ht) {
+        String s = "";
+        Entry[] children = h.children;
+
+        if (ht == 0) {
+            for (int j = 0; j < h.m; j++) {
+                //s += children[j].key;
+            }
+        } else {
+            for (int j = 0; j < h.m; j++) {
+                if (j > 0) {
+                    s += children[j].key;
+                    Term temp = (Term) children[j].value;
+                    temp.segt
+                }
+
+                s += toStringKey(children[j].next, ht - 1);
+
+            }
+        }
+        return s;
+    }
 
     // comparison functions - make Comparable instead of Key to avoid casts
     private boolean less(Comparable k1, Comparable k2) {

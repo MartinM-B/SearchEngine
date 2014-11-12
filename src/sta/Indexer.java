@@ -71,6 +71,9 @@ public class Indexer {
 
                 fileId++;
             });
+
+            terms.getTheString();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
