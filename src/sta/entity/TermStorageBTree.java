@@ -66,17 +66,25 @@ public class TermStorageBTree implements StorageInterface {
         return c;
     }
 
-    public void getTheString(){
-
-        System.out.println(this.terms.toStringKey());
-
+    public String getDictionaryString(){
+        String s = "";
+        for(Object t : this.terms.toStringKey() ){
+            Term temp = (Term) t;
+            temp.setPosition(s.length());
+            s += temp.getName();
+        }
+        return s;
     }
-    public void createDictionaryString() {
-        String temp = "";
-        int count = 0;
 
-
-
+    public String createDictionaryBlockedString() {
+        String s = "";
+        for(Object t : this.terms.toStringKey() ){
+            Term temp = (Term) t;
+            temp.setPosition(s.length());
+            s += temp.getName().length();
+            s += temp.getName();
+        }
+        return s;
     }
 }
 

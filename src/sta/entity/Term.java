@@ -127,6 +127,7 @@ public class Term implements Comparable<Term> {
                 "name='" + name + '\'' +
                 "soundex='" + soundex+ '\'' +
                 "frequency='" + frequency+ '\'' +
+                "pos='" + position+ '\'' +
                 '}';
     }
 }

@@ -204,31 +204,29 @@ public class BTree<Key extends Comparable<Key>, Value extends Term> {
         return s;
     }
 
-    public String toStringKey() {
-        return toStringKey(root, HT);
+    public List toStringKey() {
+
+        List<Term> termsArray = new ArrayList<Term>();
+        return toStringKey(root, HT, termsArray);
     }
 
-    private String toStringKey(Node h, int ht) {
-        String s = "";
+    private List toStringKey(Node h, int ht, List termArray) {
         Entry[] children = h.children;
 
         if (ht == 0) {
             for (int j = 0; j < h.m; j++) {
-                //s += children[j].key;
+                Term temp = (Term) children[j].value;
+                if(temp != null) {
+                    termArray.add(temp);
+                }
             }
         } else {
             for (int j = 0; j < h.m; j++) {
-                if (j > 0) {
-                    s += children[j].key;
-                    Term temp = (Term) children[j].value;
-                    temp.segt
-                }
-
-                s += toStringKey(children[j].next, ht - 1);
+                termArray.retainAll(toStringKey(children[j].next, ht - 1, termArray));
 
             }
         }
-        return s;
+        return termArray;
     }
 
     // comparison functions - make Comparable instead of Key to avoid casts
