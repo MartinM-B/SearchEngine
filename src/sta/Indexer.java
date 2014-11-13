@@ -58,7 +58,7 @@ public class Indexer {
                             String term = processTerm(label.current());
                             position++;
 
-                            if(term.length() > 0) {
+                            if (term.length() > 0) {
                                 String termSoundex = soundex(term);
                                 terms.addTerm(term, termSoundex, fileId, filePath.toString(), position);
                             }
@@ -72,7 +72,7 @@ public class Indexer {
                 fileId++;
             });
 
-            terms.getTheString();
+            //terms.getTheString();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class Indexer {
      */
     public Set merge(String termName1, String termName2) {
 
-        if(this.terms.getTerm(processTerm(termName1)) == null || this.terms.getTerm(processTerm(termName2)) == null){
+        if (this.terms.getTerm(processTerm(termName1)) == null || this.terms.getTerm(processTerm(termName2)) == null) {
             return new HashSet<Integer>();
         }
 
@@ -116,9 +116,9 @@ public class Indexer {
         return positions;
     }
 
-    public Set merge (Set positions, String termName2){
+    public Set<Integer> merge(Set positions, String termName2) {
 
-        if(this.terms.getTerm(processTerm(termName2)) == null || positions.isEmpty()){
+        if (this.terms.getTerm(processTerm(termName2)) == null || positions.isEmpty()) {
             return new HashSet<Integer>();
         }
 
@@ -128,9 +128,21 @@ public class Indexer {
         return positions;
     }
 
-    public Set merge (String [] termNames){
-        Set<Integer> positions =  this.terms.getTerm(processTerm(termNames[0])).getDocumentIds();
-        for(String term : termNames){
+    public Set<Integer> merge(String[] termNames) {
+        if (termNames.length <= 0)
+            return null;
+
+        Term t = terms.getTerm(processTerm(termNames[0]));
+
+        if (t == null)
+            return null;
+
+        Set<Integer> positions = t.getDocumentIds();
+
+        if (positions == null)
+            return null;
+
+        for (String term : termNames) {
             positions = this.merge(positions, term);
             //positions.retainAll(this.terms.getTerm(processTerm(term)).getDocumentIds());
         }
@@ -141,11 +153,15 @@ public class Indexer {
         Term term = this.terms.getTerm(processTerm(termName1));
         Term term2 = this.terms.getTerm(processTerm(termName2));
 
-        if(term == null && term2 == null){
+        if (term == null && term2 == null) {
             return new HashSet<Integer>();
-        }else if(term == null){
+        }
+
+        if (term == null) {
             return term2.getDocumentIds();
-        }else if(term2 == null){
+        }
+
+        if (term2 == null) {
             return term.getDocumentIds();
         }
         Set<Integer> positions = term.getDocumentIds();
@@ -155,10 +171,10 @@ public class Indexer {
         return positions;
     }
 
-    public Set or (Set positions, String termName2){
+    public Set<Integer> or(Set<Integer> positions, String termName2) {
         Term term = this.terms.getTerm(processTerm(termName2));
 
-        if(term == null){
+        if (term == null) {
             return positions;
         }
 
@@ -167,17 +183,26 @@ public class Indexer {
         return positions;
     }
 
-    public Set or (String [] termNames){
-        Set<Integer> positions =  this.terms.getTerm(processTerm(termNames[0])).getDocumentIds();
-        for(String term : termNames){
-            positions = this.or(positions, term);
+    public Set<Integer> or(String[] termNames) {
+        Term t = this.terms.getTerm(processTerm(termNames[0]));
+
+        Set<Integer> positions;
+
+        if(t == null) {
+            positions = new HashSet<>();
+        } else {
+            positions = t.getDocumentIds();
+        }
+
+        for (String term : termNames) {
+            positions = or(positions, term);
         }
         return positions;
     }
 
     public Set not(String termName1) {
-       Term term1 = this.terms.getTerm(processTerm(termName1));
-        if(term1 == null){
+        Term term1 = this.terms.getTerm(processTerm(termName1));
+        if (term1 == null) {
             return this.terms.getAvailableDocuments();
         }
         Set<Integer> positions = term1.getDocumentIds();
@@ -192,7 +217,7 @@ public class Indexer {
         term = stemming(term);
         return term;
     }
-    
+
     public Collection<Term> searchWithWildcard(String query) {
         return terms.query(query);
     }
