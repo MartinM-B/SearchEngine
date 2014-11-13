@@ -8,6 +8,13 @@ public class DocParser {
     public static void main(String[] args) throws IOException {
         Indexer i = new Indexer();
         i.parseFolder("docs");
+
+        System.out.println("Standard Dictionary: " + i.createDictionaryString(0));
+        System.out.println("Blocked Dictionary: " + i.createDictionaryString(1));
+        System.out.println("FrontCoded Dictionary: " + i.createDictionaryString(2));
+
+
+
         Set mergeResult = i.merge(i.merge(i.merge("authors", "in"), "home"), "me");
         
         String [] terms = {

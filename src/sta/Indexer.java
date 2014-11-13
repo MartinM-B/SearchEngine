@@ -72,8 +72,6 @@ public class Indexer {
                 fileId++;
             });
 
-            terms.getTheString();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,6 +193,30 @@ public class Indexer {
     
     public Collection<Term> searchWithWildcard(String query) {
         return terms.query(query);
+    }
+
+    /**
+     *
+     * @param type 0: getDictionaryString
+     *             1: createDictionaryBlockedString
+     *             2: createFrontcodingString
+     * @return
+     */
+    public String createDictionaryString(int type) {
+
+        switch (type){
+            case 0:
+                return this.terms.getDictionaryString();
+            case 1:
+                return this.terms.createDictionaryBlockedString();
+            case 2:
+                return this.terms.createFrontcodingString();
+        }
+        return null;
+    }
+
+    public String getTermsString(){
+        return this.terms.toString();
     }
 }
 

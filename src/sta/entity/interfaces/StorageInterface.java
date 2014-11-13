@@ -13,4 +13,5 @@ public interface StorageInterface {
     public Collection<Term> query(String term);
     public String getDictionaryString();
     public String createDictionaryBlockedString();
+    public String createFrontcodingString();
 }
