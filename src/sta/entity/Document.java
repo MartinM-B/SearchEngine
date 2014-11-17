@@ -63,4 +63,12 @@ public class Document {
     public int hashCode() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

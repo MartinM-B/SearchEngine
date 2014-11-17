@@ -9,14 +9,16 @@ public class Term implements Comparable<Term> {
 
     String name;
     int position;
+
+
     String soundex;
     int frequency;
     List<Document> documents = new ArrayList<>();
+    List<Integer> gaps = new ArrayList<>();
 
     //
     // Constructor
     public Term(String name, String soundex) {
-
         this.name = name;
         this.soundex = soundex;
         this.position = 0;
@@ -38,9 +40,19 @@ public class Term implements Comparable<Term> {
         if (document == null) {
             document = new Document(id, filename);
             documents.add(document);
+            gaps.add(calculateGap(id));
         }
         document.addPosition(position);
         frequency++;
+    }
+
+    private int calculateGap(int docId) {
+        if (gaps.isEmpty())
+            return docId;
+
+        int sum = gaps.stream().mapToInt(Integer::intValue).sum();
+
+        return docId - sum;
     }
 
 
@@ -115,7 +127,7 @@ public class Term implements Comparable<Term> {
     public int compareTo(Term o) {
         if (this == o) return 0;
 
-        if (name.compareTo(o.getName()) == -1 ) return -1;
+        if (name.compareTo(o.getName()) == -1) return -1;
         if (soundex.compareTo(o.getSoundex()) == -1) return -1;
 
         return 1;
@@ -125,9 +137,9 @@ public class Term implements Comparable<Term> {
     public String toString() {
         return "Term {" +
                 "name='" + name + '\'' +
-                "soundex='" + soundex+ '\'' +
-                "frequency='" + frequency+ '\'' +
-                "pos='" + position+ '\'' +
+                "soundex='" + soundex + '\'' +
+                "frequency='" + frequency + '\'' +
+                "pos='" + position + '\'' +
                 '}';
     }
 }
